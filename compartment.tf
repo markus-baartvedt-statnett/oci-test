@@ -5,20 +5,23 @@ data "oci_identity_compartments" "existing" {
 
 # Check which components exist and which to create
 locals {
+    # Active compartments in oci
     active_compartments = {
         for compartment in data.oci_identity_compartments.existing.compartments : 
         compartment.name => compartment
         if contains(keys(var.compartments), compartment.name)
     }
-    compartments_to_create = {
-        for k, v in var.compartments :
-        k => v
-        if !contains(keys(local.active_compartments), k)
-    }
+    # Compartment to manage based on current workspace
+    compartments_to_manage = {
+        for name, desc in var.compartments :
+        name => desc
+        if name == local.workspace
+  }
 }
 
+# Create (or destroy) the compartment for the current workspace
 resource "oci_identity_compartment" "compartments" {
-    for_each       = local.compartments_to_create
+    for_each       = local.compartments_to_manage
     name           = each.key
     description    = each.value
     enable_delete  = true

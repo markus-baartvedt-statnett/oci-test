@@ -1,6 +1,6 @@
 # DHCP Options
 resource "oci_core_dhcp_options" "dhcp_options" {
-    for_each        = local.workspace
+    for_each        = local.compartments_to_manage
     
     compartment_id  = each.value.id
     vcn_id          = oci_core_virtual_network.vcn.id

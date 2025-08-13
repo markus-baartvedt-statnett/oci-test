@@ -1,6 +1,6 @@
 # Local variables
 locals {
-    compartment_keys = sort(keys(local.workspace))
+    compartment_keys = sort(keys(local.compartments_to_manage))
 
     # Assign a unique index to each compartment key
     compartment_cidr_indices = {

@@ -1,6 +1,6 @@
 # Load Balancer
 resource "oci_load_balancer" "PublicLoadBalancer" {
-  for_each                      = local.workspace
+  for_each                      = local.compartments_to_manage
 
   compartment_id                = each.value.id
   display_name                  = "PublicLB-${each.key}"
