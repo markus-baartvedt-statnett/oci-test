@@ -25,3 +25,7 @@ output "PublicLoadBalancer_Public_IPs" {
 output "workspace" {
   value = terraform.workspace
 }
+
+output "dhcp_options_keys" {
+  value = keys(oci_core_dhcp_options.dhcp_options)
+}
