@@ -1,6 +1,6 @@
 # Local variables
 locals {
-    compartment_keys = sort(keys(local.compartments_to_manage))
+    compartment_keys = sort(keys(local.workspace))
 
     # Assign a unique index to each compartment key
     compartment_cidr_indices = {
@@ -8,7 +8,7 @@ locals {
     }
 }
 
-# Workspace
+# Current workspace
 locals {
-    workspace = terraform.workspace
+    workspace = { for k, v in oci_identity_compartment.compartments : k => v.id if k == terraform.workspace }
 }

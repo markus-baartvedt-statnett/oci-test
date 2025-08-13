@@ -27,11 +27,3 @@ resource "oci_identity_compartment" "compartments" {
     enable_delete  = true
     compartment_id = var.tenancy_ocid
 }
-
-# Merge existing + newly created compartments
-locals {
-  all_compartments = merge(
-    local.active_compartments,
-    { for k, v in oci_identity_compartment.compartments : k => v.id }
-  )
-}

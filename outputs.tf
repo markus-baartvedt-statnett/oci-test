@@ -1,7 +1,7 @@
 # Outputs
 output "compartment_ids" {
   value = {
-    for env, compartment in local.compartments_to_manage : env => compartment
+    for env, compartment in local.workspace : env => compartment
   }
 }
 
