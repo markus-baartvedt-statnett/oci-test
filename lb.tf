@@ -3,7 +3,7 @@ resource "oci_load_balancer" "PublicLoadBalancer" {
   compartment_id                = local.all_compartments[terraform.workspace]
   display_name                  = "PublicLB-${terraform.workspace}"
   network_security_group_ids    = [oci_core_network_security_group.WebSecurityGroup.id] # or per compartment if available
-  subnet_ids                    = [oci_core_subnet.lb_subnets[local.workspace].id]
+  subnet_ids                    = [oci_core_subnet.lb_subnets.id]
   shape                         = "flexible"
   shape_details {
     minimum_bandwidth_in_mbps = 10
