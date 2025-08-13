@@ -18,8 +18,6 @@ resource "oci_core_subnet" "web_subnets" {
 }
 
 resource "oci_core_subnet" "lb_subnets" {
-    for_each            = local.workspace
-
     compartment_id      = local.all_compartments[terraform.workspace]
     vcn_id              = oci_core_virtual_network.vcn.id
     cidr_block          = cidrsubnet(var.vcn_cidr, 8, length(local.compartment_cidr_indices)+local.compartment_cidr_indices[terraform.workspace])
@@ -29,4 +27,3 @@ resource "oci_core_subnet" "lb_subnets" {
     dhcp_options_id     = oci_core_dhcp_options.dhcp_options[terraform.workspace].id
     security_list_ids   = [oci_core_security_list.WebSecurityList.id,oci_core_security_list.SSHSecurityList.id]
 }
-
