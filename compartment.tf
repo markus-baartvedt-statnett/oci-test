@@ -15,7 +15,7 @@ locals {
     compartments_to_manage = {
         for name, desc in var.compartments :
         name => desc
-        if name == local.workspace
+        if name == terraform.workspace
   }
 }
 
@@ -26,4 +26,14 @@ resource "oci_identity_compartment" "compartments" {
     description    = each.value
     enable_delete  = true
     compartment_id = var.tenancy_ocid
+}
+
+locals {
+    # All compartments
+    all_compartments = merge(
+        { for k, v in local.active_compartments : k => v if k == terraform.workspace },
+        { for k, v in oci_identity_compartment.compartments : k => v.id if k == terraform.workspace }
+    )
+    # Current workspace
+    workspace = { for k, v in oci_identity_compartment.compartments : k => v.id if k == terraform.workspace }
 }

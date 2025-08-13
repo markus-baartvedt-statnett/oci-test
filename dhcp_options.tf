@@ -2,9 +2,9 @@
 resource "oci_core_dhcp_options" "dhcp_options" {
     for_each        = local.workspace
     
-    compartment_id  = each.value.id
+    compartment_id  = local.all_compartments[local.workspace]
     vcn_id          = oci_core_virtual_network.vcn.id
-    display_name    = "dhcp-options-${each.key}"
+    display_name    = "dhcp-options-${local.workspace}"
 
   options {
         type        = "DomainNameServer"
@@ -13,6 +13,6 @@ resource "oci_core_dhcp_options" "dhcp_options" {
 
   options {
         type                = "SearchDomain"
-        search_domain_names = [ "${each.key}.marksome.no" ]
+        search_domain_names = [ "${local.workspace}.marksome.no" ]
   }
 }

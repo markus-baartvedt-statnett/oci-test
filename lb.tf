@@ -2,10 +2,10 @@
 resource "oci_load_balancer" "PublicLoadBalancer" {
   for_each                      = local.workspace
 
-  compartment_id                = each.value.id
-  display_name                  = "PublicLB-${each.key}"
+  compartment_id                = local.all_compartments[local.workspace]
+  display_name                  = "PublicLB-${local.workspace}"
   network_security_group_ids    = [oci_core_network_security_group.WebSecurityGroup.id] # or per compartment if available
-  subnet_ids                    = [oci_core_subnet.lb_subnets[each.key].id]
+  subnet_ids                    = [oci_core_subnet.lb_subnets[local.workspace].id]
   shape                         = "flexible"
   shape_details {
     minimum_bandwidth_in_mbps = 10
@@ -16,7 +16,7 @@ resource "oci_load_balancer" "PublicLoadBalancer" {
 resource "oci_load_balancer_backendset" "PublicLoadBalancerBackendset" {
   for_each          = oci_load_balancer.PublicLoadBalancer
   name              = "LBBackendset"
-  load_balancer_id  = each.value.id
+  load_balancer_id  = local.all_compartments[local.workspace]
   policy            = "ROUND_ROBIN"
 
   health_checker {
@@ -29,20 +29,20 @@ resource "oci_load_balancer_backendset" "PublicLoadBalancerBackendset" {
 
 resource "oci_load_balancer_listener" "PublicLoadBalancerListener" {
   for_each                  = oci_load_balancer.PublicLoadBalancer
-  load_balancer_id          = each.value.id
+  load_balancer_id          = local.all_compartments[local.workspace]
   name                      = "LBListener"
-  default_backend_set_name  = oci_load_balancer_backendset.PublicLoadBalancerBackendset[each.key].name
+  default_backend_set_name  = oci_load_balancer_backendset.PublicLoadBalancerBackendset[local.workspace].name
   port                      = 80
   protocol                  = "HTTP"
 }
 
 resource "oci_load_balancer_backend" "PublicLoadBalancerBackend" {
   for_each          = oci_load_balancer.PublicLoadBalancer
-  load_balancer_id  = each.value.id
-  backendset_name   = oci_load_balancer_backendset.PublicLoadBalancerBackendset[each.key].name
+  load_balancer_id  = local.all_compartments[local.workspace]
+  backendset_name   = oci_load_balancer_backendset.PublicLoadBalancerBackendset[local.workspace].name
 
   # Assuming one instance per compartment with the same key
-  ip_address       = oci_core_instance.webservers[each.key].private_ip
+  ip_address       = oci_core_instance.webservers[local.workspace].private_ip
   port             = 80
   backup           = false
   drain            = false

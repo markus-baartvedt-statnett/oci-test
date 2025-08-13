@@ -7,7 +7,7 @@ data "oci_identity_availability_domains" "ADs" {
 data "oci_core_images" "compute_images" {
     for_each                    = local.workspace
 
-    compartment_id              = each.value.id
+    compartment_id              = local.all_compartments[local.workspace]
     operating_system            = var.image_operating_system
     operating_system_version    = var.image_operating_system_version
     shape                       = var.instance_shape
