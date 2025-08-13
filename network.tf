@@ -7,8 +7,6 @@ resource "oci_core_virtual_network" "vcn" {
 }
 
 resource "oci_core_subnet" "web_subnets" {
-    for_each            = local.workspace
-
     compartment_id      = local.all_compartments[terraform.workspace]
     vcn_id              = oci_core_virtual_network.vcn.id
     cidr_block          = cidrsubnet(var.vcn_cidr, 8, local.compartment_cidr_indices[terraform.workspace])

@@ -1,7 +1,5 @@
 # Load Balancer
 resource "oci_load_balancer" "PublicLoadBalancer" {
-  for_each                      = local.workspace
-
   compartment_id                = local.all_compartments[terraform.workspace]
   display_name                  = "PublicLB-${terraform.workspace}"
   network_security_group_ids    = [oci_core_network_security_group.WebSecurityGroup.id] # or per compartment if available
