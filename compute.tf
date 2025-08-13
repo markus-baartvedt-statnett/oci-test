@@ -12,7 +12,7 @@ resource "oci_core_instance" "webservers" {
     
     source_details {
         source_type             = "image"
-        source_id               = data.oci_core_images.compute_images[terraform.workspace].images[0].id
+        source_id               = data.oci_core_images.compute_images.images[0].id
         boot_volume_size_in_gbs = 50
     }
 

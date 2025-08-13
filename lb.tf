@@ -40,7 +40,7 @@ resource "oci_load_balancer_backend" "PublicLoadBalancerBackend" {
   backendset_name   = oci_load_balancer_backendset.PublicLoadBalancerBackendset[terraform.workspace].name
 
   # Assuming one instance per compartment with the same key
-  ip_address       = oci_core_instance.webservers[terraform.workspace].private_ip
+  ip_address       = oci_core_instance.webservers.private_ip
   port             = 80
   backup           = false
   drain            = false
