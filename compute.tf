@@ -6,7 +6,7 @@ resource "oci_core_instance" "webservers" {
     shape               = var.instance_shape
 
     create_vnic_details {
-        subnet_id       = oci_core_subnet.web_subnets[terraform.workspace].id
+        subnet_id       = oci_core_subnet.web_subnets[local.workspace].id
         display_name    = "webserver-vnic-${terraform.workspace}"
     }
     
