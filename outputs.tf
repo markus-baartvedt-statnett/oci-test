@@ -21,8 +21,7 @@ output "PublicLoadBalancer_Public_IPs" {
     env => loadbalancer.ip_addresses
   }
 }
+
 output "workspace" {
-    value = {
-        workspace, terraform.workspace
-    }
+  value = terraform.workspace
 }
