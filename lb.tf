@@ -12,7 +12,6 @@ resource "oci_load_balancer" "PublicLoadBalancer" {
 }
 
 resource "oci_load_balancer_backendset" "PublicLoadBalancerBackendset" {
-  for_each          = oci_load_balancer.PublicLoadBalancer
   name              = "LBBackendset"
   load_balancer_id  = local.all_compartments[terraform.workspace]
   policy            = "ROUND_ROBIN"
@@ -26,7 +25,6 @@ resource "oci_load_balancer_backendset" "PublicLoadBalancerBackendset" {
 }
 
 resource "oci_load_balancer_listener" "PublicLoadBalancerListener" {
-  for_each                  = oci_load_balancer.PublicLoadBalancer
   load_balancer_id          = local.all_compartments[terraform.workspace]
   name                      = "LBListener"
   default_backend_set_name  = oci_load_balancer_backendset.PublicLoadBalancerBackendset.name
