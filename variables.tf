@@ -66,6 +66,6 @@ variable "compartments" {
   default = {
     dev  = "Development compartment"
     test = "Testing compartment"
-    #prod = "Production compartment"
+    prod = "Production compartment"
   }
 }

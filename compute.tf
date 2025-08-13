@@ -1,6 +1,6 @@
 # Compute Instance
 resource "oci_core_instance" "webservers" {
-    for_each            = local.all_compartments
+    for_each            = local.workspace
 
     availability_domain = data.oci_identity_availability_domains.ADs.availability_domains[0].name
     compartment_id      = each.value.id

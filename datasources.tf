@@ -5,9 +5,9 @@ data "oci_identity_availability_domains" "ADs" {
 
 # Gets a list of supported images based on the shape, operating_system and operating_system_version provided
 data "oci_core_images" "compute_images" {
-    for_each                    = local.all_compartments
+    for_each                    = local.workspace
 
-    compartment_id  = each.value.id
+    compartment_id              = each.value.id
     operating_system            = var.image_operating_system
     operating_system_version    = var.image_operating_system_version
     shape                       = var.instance_shape

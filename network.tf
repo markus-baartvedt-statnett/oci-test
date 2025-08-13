@@ -7,7 +7,7 @@ resource "oci_core_virtual_network" "vcn" {
 }
 
 resource "oci_core_subnet" "web_subnets" {
-    for_each            = local.all_compartments
+    for_each            = local.workspace
 
     compartment_id      = each.value.id
     vcn_id              = oci_core_virtual_network.vcn.id
@@ -20,7 +20,7 @@ resource "oci_core_subnet" "web_subnets" {
 }
 
 resource "oci_core_subnet" "lb_subnets" {
-    for_each            = local.all_compartments
+    for_each            = local.workspace
 
     compartment_id      = each.value.id
     vcn_id              = oci_core_virtual_network.vcn.id
