@@ -15,7 +15,7 @@ locals {
     compartments_to_manage = {
         for name, desc in var.compartments :
         name => desc
-        if name == terraform.workspace
+        if name == terraform.workspace && !contains(keys(local.active_compartments), name)
   }
 }
 
