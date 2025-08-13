@@ -13,7 +13,7 @@ resource "oci_core_subnet" "web_subnets" {
     display_name        = "web-subnet-${terraform.workspace}"
     dns_label           = "web${terraform.workspace}"
     route_table_id      = oci_core_route_table.RouteTableViaIGW.id
-    dhcp_options_id     = oci_core_dhcp_options.dhcp_options[local.workspace].id
+    dhcp_options_id     = oci_core_dhcp_options.dhcp_options[terraform.workspace].id
     security_list_ids   = [oci_core_security_list.WebSecurityList.id,oci_core_security_list.SSHSecurityList.id]
 }
 
@@ -26,7 +26,7 @@ resource "oci_core_subnet" "lb_subnets" {
     display_name        = "lb-subnet-${terraform.workspace}"
     dns_label           = "lb${terraform.workspace}"
     route_table_id      = oci_core_route_table.RouteTableViaIGW.id
-    dhcp_options_id     = oci_core_dhcp_options.dhcp_options[local.workspace].id
+    dhcp_options_id     = oci_core_dhcp_options.dhcp_options[terraform.workspace].id
     security_list_ids   = [oci_core_security_list.WebSecurityList.id,oci_core_security_list.SSHSecurityList.id]
 }
 
