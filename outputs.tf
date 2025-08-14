@@ -9,8 +9,8 @@ output "loadbalancer_ip" {
     value = oci_load_balancer.PublicLoadBalancer.ip_address_details
 }
 
-output "instance_public_ip" {
-  value = data.oci_core_vnic.webserver_vnic.public_ip
+output "instance_ip" {
+    value = oci_core_instance.webservers.private_ip
 }
 
 output "workspace" {
