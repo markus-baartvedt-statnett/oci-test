@@ -6,7 +6,7 @@ output "compartment_ids" {
 }
 
 output "loadbalancer_ip" {
-  value = oci_load_balancer.PublicLoadBalancer.ip_address_details
+  value = oci_load_balancer.PublicLoadBalancer.ip_address_details.ip_address
 }
 
 output "workspace" {
