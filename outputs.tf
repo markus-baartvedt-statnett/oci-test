@@ -7,7 +7,7 @@ output "compartment_ids" {
 
 output "loadbalancer_ip" {
   value = {
-    for env, lb in oci_load_balancer.PublicLoadBalancer : env => lb.ip_address_details[0].ip_address
+    for env, lb in oci_load_balancer.PublicLoadBalancer : env => lb.ip_address_details
   }
 }
 
