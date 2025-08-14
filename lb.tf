@@ -2,8 +2,8 @@
 resource "oci_load_balancer" "PublicLoadBalancer" {
   compartment_id                = local.all_compartments[terraform.workspace]
   display_name                  = "PublicLB-${terraform.workspace}"
-  network_security_group_ids    = [oci_core_network_security_group.WebSecurityGroup[terraform.workspace].id] # or per compartment if available
-  subnet_ids                    = [oci_core_subnet.lb_subnets[terraform.workspace].id]
+  network_security_group_ids    = [oci_core_network_security_group.WebSecurityGroup.id]
+  subnet_ids                    = [oci_core_subnet.lb_subnets.id]
   shape                         = "flexible"
   shape_details {
     minimum_bandwidth_in_mbps = 10
@@ -37,7 +37,7 @@ resource "oci_load_balancer_backend" "PublicLoadBalancerBackend" {
   backendset_name   = oci_load_balancer_backendset.PublicLoadBalancerBackendset.name
 
   # Assuming one instance per compartment with the same key
-  ip_address       = oci_core_instance.webservers[terraform.workspace].private_ip
+  ip_address       = oci_core_instance.webservers.private_ip
   port             = 80
   backup           = false
   drain            = false
